@@ -1,18 +1,19 @@
 import { dummyData } from "../../assets/Data";
 import Product from "./product.jsx/Product";
 
-export default function Products({onAddToCart}) {
+export default function Products({ onAddToCart, searchValue }) {
   const data = dummyData;
-  const getAddToCart=(newItem)=>{
-     onAddToCart(newItem)
-     
-  }
+
+  let content =
+    searchValue.trim() === ""
+      ? data
+      : data.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()) || item.name.toLowerCase()===searchValue.toLowerCase());
   return (
-    <div className="p-5 w-full text-center">
+    <div className="p-5 w-full text-center flex-wrap">
       <ul className="flex flex-wrap">
-        {data.map((item) => (
+        {content.map((item) => (
           <li key={item.id}>
-            <Product item={item} onGetAddToCart={getAddToCart}/>
+            <Product item={item} />
           </li>
         ))}
       </ul>
